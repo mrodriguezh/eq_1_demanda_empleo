@@ -35,8 +35,8 @@ streamlit run app.py
 
 ## Desarrolladores
 
-- Mariana Morao Santos - [marianamorao@icloud.com](marianamorao@icloud.com)
+- Mariana Morao Santos - [mariana-morao@hotmail.com](mariana-morao@hotmail.com)
 - Esther Puisac Nogarol - [epuisac@hotmail.com](epuisac@hotmail.com)
 
 ## Referencias
-[1] Mariana Morao y Esther P. Nogarol. EL MERCADO DE TRABAJO: MENOS INFOJOBS Y MÁS TINDER, pp. 10, 2022. https://medium.com/saturdays-ai/AAA
+[1] Mariana Morao y Esther P. Nogarol. EL MERCADO DE TRABAJO: MENOS INFOJOBS Y MÁS TINDER, pp. 10, 2022. https://medium.com/@ferringayo/5333392262b9

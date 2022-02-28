@@ -83,17 +83,15 @@ def get_lon_lat_list(criteria_list):
 
 
 def main():
-    # root_path = 'C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/'
-    root_path = '/data/mcrodriguez/SaturdaysAI_ZGZ/'
-    
+    root_path = 'C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/'
+       
     data_path = root_path+'eq_1_demanda_empleo/resources/data/cleaned/df_data.csv'
     data_df = pd.read_csv(data_path)
 
     sector_list = data_df['sector'].unique().tolist()
     province_list = data_df['province'].unique().tolist()
     
-    # icon_image = Image.open('C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
-    icon_image = Image.open(root_path+'eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
+    icon_image = Image.open('C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
     st.set_page_config(page_title='Ofertas de Empleo en Aragón', 
                        page_icon=icon_image, # "🧊"
                        layout="wide", # "centered", "wide"
@@ -145,7 +143,9 @@ def main():
 
         year_selected = st.selectbox('Seleccione el año', ['Selecciona todos']+list(map(str, year_list)), key=1)
         sector_type = st.selectbox('Seleccione el sector laboral', ['Selecciona todos']+sector_list, key=2)
-        province_type = st.selectbox('Seleccione la provincia', ['Selecciona todos']+province_list, key=3)        
+        #filtered_province_list = list(filter(None, province_list))
+        filtered_province_list = [province for province in province_list if str(province) != 'nan']
+        province_type = st.selectbox('Seleccione la provincia', ['Selecciona todos']+ filtered_province_list , key=3)        
         title = "Ofertas teniendo en cuenta: "
 
         if st.form_submit_button(label='Generar gráfica'):  
