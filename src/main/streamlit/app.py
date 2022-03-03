@@ -73,7 +73,9 @@ def draw_offer_by_date(date_list, count_list, title):
 
 def get_lon_lat_list(criteria_list):
     lat_lon_list = list()
-    for criteria in criteria_list:    
+    for criteria in criteria_list:   
+        if criteria == 'S':
+            criteria = 'Sabiñánigo' 
         geolocator = Nominatim(user_agent="Your_Name")
         location = geolocator.geocode(criteria)
         # print(location.address)
@@ -94,7 +96,7 @@ def main():
     icon_image = Image.open('C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
     st.set_page_config(page_title='Ofertas de Empleo en Aragón', 
                        page_icon=icon_image, # "🧊"
-                       layout="wide", # "centered", "wide"
+                       layout="centered", # "centered", "wide"
                        initial_sidebar_state="auto", # "expanded", "auto", "collapsed"
                        menu_items= None # {'About': "# This is a header. This is an *extremely* cool app!"}
                        )
@@ -282,7 +284,9 @@ def main():
                 # Use pandas to calculate additional data
                 criteria_count_df["count_radius"] = criteria_count_df["count"].apply(lambda count: count*70)
                 criteria_list = criteria_count_df['criteria'].tolist()                               
+                print(criteria_list)
                 criteria_count_df["location"] = get_lon_lat_list(criteria_list)   
+                print(criteria_count_df)
                 # Define a layer to display on a map
                 layer = pdk.Layer(
                                     "ScatterplotLayer",
