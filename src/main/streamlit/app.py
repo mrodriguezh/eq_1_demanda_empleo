@@ -85,15 +85,17 @@ def get_lon_lat_list(criteria_list):
 
 
 def main():
-    root_path = 'C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/'
+    root_path = 'C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/'    
        
-    data_path = root_path+'eq_1_demanda_empleo/resources/data/cleaned/df_data.csv'
+    data_path = root_path+'eq_1_demanda_empleo/resources/data/cleaned/df_data_unified.csv'
     data_df = pd.read_csv(data_path)
 
     sector_list = data_df['sector'].unique().tolist()
+    sector_list = [x for x in sector_list if str(x) != 'nan']
+    sector_list = sorted(sector_list, key=str.lower)
     province_list = data_df['province'].unique().tolist()
     
-    icon_image = Image.open('C:/Users/HP/Desktop/AI/DemandaDeEmpleo/Actualizado/eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
+    icon_image = Image.open(root_path+'eq_1_demanda_empleo/src/main/streamlit/icon_offer.png')   
     st.set_page_config(page_title='Ofertas de Empleo en Aragón', 
                        page_icon=icon_image, # "🧊"
                        layout="centered", # "centered", "wide"
@@ -138,7 +140,8 @@ def main():
         
         year_list = list()
         for date in date_list:
-            year = int(date.split('/')[2])
+            # year = int(date.split('/')[2])
+            year = int(date.split('-')[0])
             if year not in year_list:
                 year_list.append(year)
         year_list = sorted(year_list, key=int, reverse=False)
@@ -156,7 +159,7 @@ def main():
             if year_selected != 'Selecciona todos' and sector_type == 'Selecciona todos' and province_type == 'Selecciona todos':
                 st.success('¡Ha seleccionado correctamente todas las opciones!')
                 final_data_df = sub_data_df[sub_data_df['date'].str.contains(str(year_selected))]
-                final_data_df["date"] = pd.to_datetime(final_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+                # final_data_df["date"] = pd.to_datetime(final_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
                 final_data_df = final_data_df.sort_values(by="date")
                 title += 'AÑO'
             # SECTOR
@@ -177,7 +180,7 @@ def main():
             elif year_selected != 'Selecciona todos' and sector_type != 'Selecciona todos' and province_type == 'Selecciona todos':
                 st.success('¡Ha seleccionado correctamente todas las opciones!')
                 sector_data_df = sub_data_df.loc[sub_data_df['sector'] == sector_type, ['date']]
-                sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+                # sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
                 sector_data_df = sector_data_df.sort_values(by="date")           
                 final_data_df = sector_data_df[sector_data_df['date'].str.contains(str(year_selected))] 
                 title += 'AÑO, SECTOR'
@@ -185,7 +188,7 @@ def main():
             elif year_selected != 'Selecciona todos' and sector_type == 'Selecciona todos' and province_type != 'Selecciona todos':
                 st.success('¡Ha seleccionado correctamente todas las opciones!')
                 province_data_df = sub_data_df.loc[sub_data_df['province'] == province_type, ['date']]
-                province_data_df["date"] = pd.to_datetime(province_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+                # province_data_df["date"] = pd.to_datetime(province_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
                 province_data_df = province_data_df.sort_values(by="date")
                 final_data_df = province_data_df[province_data_df['date'].str.contains(str(year_selected))]   
                 title += 'AÑO, PROVINCIA'                           
@@ -193,7 +196,7 @@ def main():
             elif year_selected == 'Selecciona todos' and sector_type != 'Selecciona todos' and province_type != 'Selecciona todos':
                 st.success('¡Ha seleccionado correctamente todas las opciones!')    
                 sector_data_df = sub_data_df.loc[sub_data_df['sector'] == sector_type, ['date', 'province']]
-                sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+                # sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
                 sector_data_df = sector_data_df.sort_values(by="date")
                 final_data_df = sector_data_df.loc[sector_data_df['province'] == province_type, ['date']]
                 title += 'SECTOR, PROVINCIA'
@@ -201,7 +204,7 @@ def main():
             elif year_selected != 'Selecciona todos' and sector_type != 'Selecciona todos' and province_type != 'Selecciona todos':
                 st.success('¡Ha seleccionado correctamente todas las opciones!')
                 sector_data_df = sub_data_df.loc[sub_data_df['sector'] == sector_type, ['date', 'province']]
-                sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+                # sector_data_df["date"] = pd.to_datetime(sector_data_df["date"], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
                 sector_data_df = sector_data_df.sort_values(by="date")                    
                 province_data_df = sector_data_df.loc[sector_data_df['province'] == province_type, ['date']]
                 final_data_df = province_data_df[province_data_df['date'].str.contains(str(year_selected))] 
@@ -216,7 +219,7 @@ def main():
 
     with st.form(key='word_cloud_form'):
             st.title('Nube de palabras')
-
+            
             content_type = st.selectbox('Seleccione tipo de contenido', ['Selecciona', 'Ofertas', 'Descripción'], key=1)            
             sector_type = st.selectbox('Seleccione el sector laboral', ['Selecciona']+sector_list, key=2)
                         
@@ -245,8 +248,9 @@ def main():
                     if sector_type == 'Todas':                        
                         text = ' '.join(data_df[column_name].tolist())
                     else:
-                        sub_data_df = data_df.loc[data_df['sector'] == sector_type, ['job', 'content','requirement']]
-                        text = ' '.join(sub_data_df[column_name].tolist())                    
+                        sub_data_df = data_df.loc[data_df['sector'] == sector_type, ['job', 'content']] # ,'requirement'   
+                        filter_list = [x for x in sub_data_df[column_name].tolist() if str(x) != 'nan']            
+                        text = ' '.join(filter_list)                    
 
                     mask = np.array(Image.open(image_upload))
                     # st.image(image, width=100, use_column_width=True)            
@@ -284,9 +288,9 @@ def main():
                 # Use pandas to calculate additional data
                 criteria_count_df["count_radius"] = criteria_count_df["count"].apply(lambda count: count*70)
                 criteria_list = criteria_count_df['criteria'].tolist()                               
-                print(criteria_list)
+                # print(criteria_list)
                 criteria_count_df["location"] = get_lon_lat_list(criteria_list)   
-                print(criteria_count_df)
+                # print(criteria_count_df)
                 # Define a layer to display on a map
                 layer = pdk.Layer(
                                     "ScatterplotLayer",

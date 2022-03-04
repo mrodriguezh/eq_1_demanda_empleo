@@ -9,3 +9,4 @@ wordcloud==1.8.1 # pip install wordcloud
 streamlit==1.5.1 # pip install streamlit
 pydeck==0.7.1 # pip install pydeck
 geopy==2.2.0 # pip install geopy
+openpyxl==3.0.9 # pip install openpyxl

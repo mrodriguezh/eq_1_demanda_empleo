@@ -39,4 +39,4 @@ streamlit run app.py
 - Esther Puisac Nogarol - [epuisac@hotmail.com](epuisac@hotmail.com)
 
 ## Referencias
-[1] Mariana Morao y Esther P. Nogarol. EL MERCADO DE TRABAJO: MENOS INFOJOBS Y MÁS TINDER, pp. 10, 2022. https://medium.com/@ferringayo/5333392262b9
+[1] Mariana Morao y Esther P. Nogarol. EL MERCADO DE TRABAJO: MENOS INFOJOBS Y MÁS TINDER, pp. 10, 2022. https://medium.com/@ferringayo/el-mercado-de-trabajo-d73d79ed3c06
